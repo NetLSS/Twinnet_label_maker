@@ -2,10 +2,12 @@
 import cv2
 import os
 import random
+import datetime as dt
 
 curr_idx = 0
 filter_size = 1
 clicked = False
+clicked_R = False
 show_label = False
 edited = False
 cropping = False
@@ -14,6 +16,7 @@ h_flag = False
 w_offset = 2
 h_offset = 5
 
+timestamp_save_mode = True
 
 def extractImg(filepath):
     global curr_idx, show_label, filter_size, edited
@@ -61,7 +64,7 @@ def extractImg(filepath):
         return image
 
     def tt(event, x, y, flags, param):
-        global clicked, gv, cropping, crop, w_offset, h_offset, edited, h_flag, w_flag
+        global clicked, gv, cropping, crop, w_offset, h_offset, edited, h_flag, w_flag, clicked_R
         nonlocal label
 
         if event == cv2.EVENT_LBUTTONDOWN:
@@ -77,6 +80,7 @@ def extractImg(filepath):
                 cv2.imshow('crop', crop)
                 cropping = True
             else:
+                clicked_R = True
                 edited = True
                 img[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = crop
                 label[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = 255
@@ -112,11 +116,17 @@ def extractImg(filepath):
 
             if clicked:
                 label = paint(label, x, y, filter_size)
+            elif clicked_R:
+                img[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = crop
+                label[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = 255
                 # label[y][x] = 255
             # print("x:{}, y:{}".format(x, y))
 
         elif event == cv2.EVENT_LBUTTONUP:
             clicked = False
+
+        elif event ==cv2.EVENT_RBUTTONUP:
+            clicked_R = False
 
     cv2.setMouseCallback("img", tt)
 
@@ -142,6 +152,14 @@ def extractImg(filepath):
             if edited:
                 print(f"image saved: {os.path.join(savepath, os.path.basename(lblpath))}")
                 print(f"image saved: {os.path.join(inspsavepath, os.path.basename(lblpath))}")
+
+                if timestamp_save_mode:
+                    timestamp = str(dt.datetime.now().timestamp())
+                    label_file_name = timestamp + lblpath.split('_')[-1]
+                    cv2.imwrite(os.path.join(savepath, os.path.basename(label_file_name)), label)
+                    cv2.imwrite(os.path.join(inspsavepath, os.path.basename(label_file_name)), img)
+                    break
+
                 cv2.imwrite(os.path.join(savepath, os.path.basename(lblpath)), label)
                 cv2.imwrite(os.path.join(inspsavepath, os.path.basename(lblpath)), img)  # -------------------
             break
@@ -166,6 +184,13 @@ def extractImg(filepath):
             if edited:
                 print(f"image saved: {os.path.join(savepath, os.path.basename(lblpath))}")
                 print(f"image saved: {os.path.join(inspsavepath, os.path.basename(lblpath))}")
+
+                if timestamp_save_mode:
+                    timestamp = str(int(dt.datetime.now().timestamp()))
+                    label_file_name = f"{timestamp}_{lblpath.split('_')[-1]}"
+                    cv2.imwrite(os.path.join(savepath, os.path.basename(label_file_name)), label)
+                    cv2.imwrite(os.path.join(inspsavepath, os.path.basename(label_file_name)), img)
+                    break
 
                 cv2.imwrite(os.path.join(savepath, os.path.basename(lblpath)), label)
                 cv2.imwrite(os.path.join(inspsavepath, os.path.basename(lblpath)), img)
