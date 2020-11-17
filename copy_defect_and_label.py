@@ -16,7 +16,11 @@ h_flag = False
 w_offset = 2
 h_offset = 5
 
+current_w_offset = 2
+current_h_offset = 5
+
 timestamp_save_mode = True
+
 
 def extractImg(filepath):
     global curr_idx, show_label, filter_size, edited
@@ -32,6 +36,7 @@ def extractImg(filepath):
     label = cv2.imread(lblpath, 0) if os.path.exists(lblpath) else np.zeros((h, w))
     cv2.namedWindow("img", 0)
     cv2.namedWindow("lbl", 0)
+
 
     temp_img = np.copy(img)
     temp_label = np.copy(label)
@@ -64,7 +69,7 @@ def extractImg(filepath):
         return image
 
     def tt(event, x, y, flags, param):
-        global clicked, gv, cropping, crop, w_offset, h_offset, edited, h_flag, w_flag, clicked_R
+        global clicked, gv, cropping, crop, w_offset, h_offset, edited, h_flag, w_flag, clicked_R, current_w_offset, current_h_offset
         nonlocal label
 
         if event == cv2.EVENT_LBUTTONDOWN:
@@ -77,13 +82,15 @@ def extractImg(filepath):
         elif event == cv2.EVENT_RBUTTONDOWN:  # ---------------------------------------------우클릭으로 이미지 떼서 붙임
             if cropping == False:
                 crop = img[y - h_offset:y + h_offset, x - w_offset:x + w_offset]
+                current_w_offset = w_offset
+                current_h_offset = h_offset
                 cv2.imshow('crop', crop)
                 cropping = True
             else:
                 clicked_R = True
                 edited = True
-                img[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = crop
-                label[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = 255
+                img[y - current_h_offset:y + current_h_offset, x - current_w_offset:x + current_w_offset] = crop
+                label[y - current_h_offset:y + current_h_offset, x - current_w_offset:x + current_w_offset] = 255
     #  elif event == cv2.EVENT_RBUTTONUP:
             # cropping = True
 
@@ -117,16 +124,23 @@ def extractImg(filepath):
             if clicked:
                 label = paint(label, x, y, filter_size)
             elif clicked_R:
-                img[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = crop
-                label[y - h_offset:y + h_offset, x - w_offset:x + w_offset] = 255
+                img[y - current_h_offset:y + current_h_offset, x - current_w_offset:x + current_w_offset] = crop
+                label[y - current_h_offset:y + current_h_offset, x - current_w_offset:x + current_w_offset] = 255
                 # label[y][x] = 255
             # print("x:{}, y:{}".format(x, y))
+            if flags & cv2.EVENT_FLAG_SHIFTKEY:
+                img[y - current_h_offset:y + current_h_offset, x - current_w_offset:x + current_w_offset] = crop
+                label[y - current_h_offset:y + current_h_offset, x - current_w_offset:x + current_w_offset] = 255
+                if not edited:
+                    edited = True
 
         elif event == cv2.EVENT_LBUTTONUP:
             clicked = False
 
-        elif event ==cv2.EVENT_RBUTTONUP:
+        elif event == cv2.EVENT_RBUTTONUP:
             clicked_R = False
+
+
 
     cv2.setMouseCallback("img", tt)
 
