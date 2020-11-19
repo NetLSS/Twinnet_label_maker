@@ -1,6 +1,8 @@
 from PIL import Image
 from glob import glob
 from os import path as osp
+from matplotlib import pyplot as plt
+import numpy as np
 
 result_root_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Result"
 img_ext = "*.png"
@@ -27,4 +29,18 @@ for FN_path in FN_list:
         print(number, end=", ")
     print("\b\b")
 
+
+FN_count = dict(sorted(FN_count.items(), key=(lambda x: x[1]), reverse=False))
 print(FN_count)
+
+x = list(FN_count.keys())
+y = list(FN_count.values())
+
+print(x)
+print(y)
+
+plt.barh([str(key) for key in x],y)
+plt.xticks(fontsize=10)
+plt.xlabel("FN count")
+plt.ylabel("image number")
+plt.show()
