@@ -28,6 +28,7 @@ for FN_path in FN_list:
         FN_count[int(number)]+=1
         print(number, end=", ")
     print("\b\b")
+    print(f"total FP: {len(img_list)}")
 
 
 FN_count = dict(sorted(FN_count.items(), key=(lambda x: x[1]), reverse=False))
