@@ -4,6 +4,11 @@ import os
 import random
 import datetime as dt
 
+"""
+원본이미지, label파일(0 or 255로 구성)을 생성
+복사 경우 이미지 특정 부분을 따와서 복사/붙여넣기 가능 (마우스 우클릭)
+"""
+
 curr_idx = 0
 filter_size = 1
 clicked = False

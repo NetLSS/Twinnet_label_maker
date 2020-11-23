@@ -2,7 +2,7 @@ import glob
 from os import path as osp
 import os
 
-target_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_erase_similar(same)\test_refer"
+target_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_erase_similar(insp_ref_change)\test_roi\insp"
 
 img_ext = "*.png"
 img_ext_only = "png"
