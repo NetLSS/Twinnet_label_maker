@@ -10,8 +10,7 @@ insp_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_roi\insp"
 insp_label_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_roi\insp_label"
 ref_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_refer"
 
-single_image_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data\Ehwa_erase_similar(TP2edge)\0_1100_1000_008-2.png"
-
+single_image_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data\Ehwa_erase_similar(TP2edge)\0_800_24300_041-2.png"
 
 
 WIDTH = 200

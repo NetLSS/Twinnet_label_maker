@@ -14,11 +14,11 @@ WIDTH  = 200
 IMAGE_TYPE = "png"
 IS_DUBUG = True
 
-refer_image_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_erase_similar(insp_ref_change)\test_refer"
-insp_image_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_erase_similar(insp_ref_change)\test_roi\insp"
+refer_image_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_refer"
+insp_image_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_roi\insp"
 # refer_label_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data"
-insp_label_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_erase_similar(insp_ref_change)\test_roi\insp_label"
-save_full_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data\EHWA_ADI2_Exp_erase_similar(insp_ref_change)"
+insp_label_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_roi\insp_label"
+save_full_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data\EHWA_ADI2_eraseT_201117-FN-down"
 
 if not osp.exists(save_full_path):
     os.makedirs(save_full_path)
