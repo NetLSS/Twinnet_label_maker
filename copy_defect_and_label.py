@@ -32,8 +32,8 @@ def extractImg(filepath):
     edited = False
     imgpath = filepath[0]
     lblpath = filepath[1]
-    savepath = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117\test_roi\insp_label"  # "D:\public\Hee1\ADI\For_Check_Data\defect_data"
-    inspsavepath = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117\test_roi\insp"  # "D:\public\Hee1\ADI\For_Check_Data\defect_data\insp"  # -------------------
+    label_savepath = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\test_roi\insp_label"  # "D:\public\Hee1\ADI\For_Check_Data\defect_data"
+    insp_savepath = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\test_roi\insp"  # "D:\public\Hee1\ADI\For_Check_Data\defect_data\insp"  # -------------------
     print(imgpath)
     img = cv2.imread(imgpath, 0)
     h, w = img.shape[:2]
@@ -165,22 +165,24 @@ def extractImg(filepath):
 
         elif key == 122 or key == 90:  # z | Z
             label = np.zeros_like(img[:, :, 0])
-
+        elif key == 99:  # c(clear)
+            # cropping = False
+            break
         elif key == 97:  # a
             curr_idx -= 1
             if edited:
-                print(f"image saved: {os.path.join(savepath, os.path.basename(lblpath))}")
-                print(f"image saved: {os.path.join(inspsavepath, os.path.basename(lblpath))}")
+                print(f"image saved: {os.path.join(label_savepath, os.path.basename(lblpath))}")
+                print(f"image saved: {os.path.join(insp_savepath, os.path.basename(lblpath))}")
 
                 if timestamp_save_mode:
                     timestamp = str(dt.datetime.now().timestamp())
-                    label_file_name = timestamp + lblpath.split('_')[-1]
-                    cv2.imwrite(os.path.join(savepath, os.path.basename(label_file_name)), label)
-                    cv2.imwrite(os.path.join(inspsavepath, os.path.basename(label_file_name)), img)
+                    label_file_name = f"{timestamp}_{lblpath.split('_')[-1]}"
+                    cv2.imwrite(os.path.join(label_savepath, os.path.basename(label_file_name)), label)
+                    cv2.imwrite(os.path.join(insp_savepath, os.path.basename(label_file_name)), img)
                     break
 
-                cv2.imwrite(os.path.join(savepath, os.path.basename(lblpath)), label)
-                cv2.imwrite(os.path.join(inspsavepath, os.path.basename(lblpath)), img)  # -------------------
+                cv2.imwrite(os.path.join(label_savepath, os.path.basename(lblpath)), label)
+                cv2.imwrite(os.path.join(insp_savepath, os.path.basename(lblpath)), img)  # -------------------
             break
 
         # elif key == 119:  # w
@@ -201,18 +203,18 @@ def extractImg(filepath):
             curr_idx += 1
             print(curr_idx)
             if edited:
-                print(f"image saved: {os.path.join(savepath, os.path.basename(lblpath))}")
-                print(f"image saved: {os.path.join(inspsavepath, os.path.basename(lblpath))}")
+                print(f"image saved: {os.path.join(label_savepath, os.path.basename(lblpath))}")
+                print(f"image saved: {os.path.join(insp_savepath, os.path.basename(lblpath))}")
 
                 if timestamp_save_mode:
                     timestamp = str(int(dt.datetime.now().timestamp()))
                     label_file_name = f"{timestamp}_{lblpath.split('_')[-1]}"
-                    cv2.imwrite(os.path.join(savepath, os.path.basename(label_file_name)), label)
-                    cv2.imwrite(os.path.join(inspsavepath, os.path.basename(label_file_name)), img)
+                    cv2.imwrite(os.path.join(label_savepath, os.path.basename(label_file_name)), label)
+                    cv2.imwrite(os.path.join(insp_savepath, os.path.basename(label_file_name)), img)
                     break
 
-                cv2.imwrite(os.path.join(savepath, os.path.basename(lblpath)), label)
-                cv2.imwrite(os.path.join(inspsavepath, os.path.basename(lblpath)), img)
+                cv2.imwrite(os.path.join(label_savepath, os.path.basename(lblpath)), label)
+                cv2.imwrite(os.path.join(insp_savepath, os.path.basename(lblpath)), img)
             break
 
         elif key == 114:  # r
