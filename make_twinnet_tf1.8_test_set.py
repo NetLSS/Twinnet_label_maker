@@ -14,11 +14,13 @@ WIDTH  = 200
 IMAGE_TYPE = "png"
 IS_DUBUG = True
 
-refer_image_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_refer"
-insp_image_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_roi\insp"
+insp_ref_inverse = False
+
+refer_image_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\refer"
+insp_image_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\test_roi\insp"
 # refer_label_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data"
-insp_label_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117-FN-down\test_roi\insp_label"
-save_full_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data\EHWA_ADI2_eraseT_201117-FN-down"
+insp_label_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\test_roi\insp_label"
+save_full_path = r"D:\2020\DS\Project\2020-11-18-EHWA_Teinnetwork_Test\TwinnetTest\Data\EHWA_ADI2_Exp_ArtificialD(inspRefInverse)"
 
 if not osp.exists(save_full_path):
     os.makedirs(save_full_path)
@@ -69,9 +71,16 @@ for insp_img_file in insp_image_files:
     ref_img = np.float32(cv2.imread(ref_img_file, cv2.IMREAD_GRAYSCALE))
     insp_label_img = np.float32(cv2.imread(insp_label_file, cv2.IMREAD_GRAYSCALE))
 
-    test_img[:, 0 * WIDTH: 1 * WIDTH] = ref_img
-    test_img[:, 1 * WIDTH: 2 * WIDTH] = insp_img
-    # test_img[:, 2 * WIDTH: 3 * WIDTH] = # Refer Label
-    test_img[:, 3 * WIDTH: 4 * WIDTH] = insp_label_img
+
+    if insp_ref_inverse:
+        test_img[:, 0 * WIDTH: 1 * WIDTH] = insp_img
+        test_img[:, 1 * WIDTH: 2 * WIDTH] = ref_img
+        test_img[:, 2 * WIDTH: 3 * WIDTH] = insp_label_img  # Refer Label
+        # test_img[:, 3 * WIDTH: 4 * WIDTH] =  # insp_label
+    else:
+        test_img[:, 0 * WIDTH: 1 * WIDTH] = ref_img
+        test_img[:, 1 * WIDTH: 2 * WIDTH] = insp_img
+        # test_img[:, 2 * WIDTH: 3 * WIDTH] = # Refer Label
+        test_img[:, 3 * WIDTH: 4 * WIDTH] = insp_label_img
 
     cv2.imwrite(osp.join(save_full_path, osp.basename(insp_img_file)), test_img)
