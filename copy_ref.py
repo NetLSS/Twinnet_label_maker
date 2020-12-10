@@ -2,10 +2,10 @@ from os import path as osp
 import glob
 import shutil
 
-insp_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117\test_roi\insp"
+insp_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\test_roi\insp"
 refer_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_split_Dataset\refer"
 
-refer_save_path = r"V:\ADI\DATA\EHWA_ADI2_eraseT_201117\refer"
+refer_save_path = r"V:\ADI\DATA\EHWA_ADI2_Exp_ArtificialD\refer"
 
 insp_list = glob.glob(insp_path+"\\*.png")
 
